@@ -9,29 +9,19 @@ GAME RULES:
 
 */
 let scores, dice, roundScore, activePlayer, img, rollDiceBtn, current1, current2, gameBeingPlayed;
-[score1, score2] = scores = [0, 0];
-roundScore = 0;
-activePlayer = 0;
-
-dice = Math.floor(Math.random() * 6 + 1); // Math.random() (0,1) but not 1
-
-document.querySelector('#current-' + activePlayer).textContent = dice; //textContent is only for plain text but no HTML 
-// document.querySelector('#current-' + activePlayer).innerHTML = `<em> ${dice} </em>`; //em = italic font
-
-score1 = document.getElementById('score-0');
-score2 = document.getElementById('score-1');
-diceImg = document.querySelector('.dice');
-rollDiceBtn = document.querySelector('.btn-roll');
 
 resetAll();
 
-rollDiceBtn.addEventListener('click', () => { //use anonymous function for your CallBacks
-    if (gameBeingPlayed) { // 1. Random Number
-        let dice = Math.floor(Math.random() * 6 + 1);
+document.querySelector('.btn-roll').addEventListener('click', () => { //use anonymous function for your CallBacks
+    if (gameBeingPlayed) { 
+        // 1. Random Number
+        var dice = Math.floor(Math.random() * 6) + 1;
+        // document.querySelector('#current-' + activePlayer).textContent = dice; //textContent is only for plain text but no HTML 
+        // document.querySelector('#current-' + activePlayer).innerHTML = `<em> ${dice} </em>`; //em = italic font
 
         // 2. Display the result
-        diceImg.style.display = 'block';
-        diceImg.src = `dice-${dice}.png`;
+        document.querySelector('.dice').style.display = 'block';
+        document.querySelector('.dice').src = `dice-${dice}.png`;
 
         // 3. Update the roundScore IF the rolled number is NOT 1
         if (dice !== 1) {
@@ -46,7 +36,7 @@ rollDiceBtn.addEventListener('click', () => { //use anonymous function for your 
 });
 
 document.querySelector('.btn-hold').addEventListener('click', () => {
-    if (gameBeingPlayed) { 
+    if (gameBeingPlayed) {
         scores[activePlayer] += roundScore; // Add current score to GLOBAL score
 
         // Update the UI
@@ -96,16 +86,16 @@ function resetCurrent() {
 
 function resetAll() {
     gameBeingPlayed = true;
-    score1.textContent = '0'; //getElementById is faster than the querySelector
-    score2.textContent = '0';
-    current1 = document.getElementById('current-0');
-    current2 = document.getElementById('current-1');
-
     scores = [0, 0];
     roundScore = 0;
     activePlayer = 0;
-    current1.textContent = '0';
-    current2.textContent = '0';
+
+    document.getElementById('score-0').textContent = '0'; //getElementById is faster than the querySelector
+    document.getElementById('score-1').textContent = '0';
+
+    document.getElementById('current-0').textContent = '0';
+    document.getElementById('current-1').textContent = '0';
+
     document.getElementById('name-0').textContent = 'Player 1';
     document.getElementById('name-1').textContent = 'Player 2';
     document.querySelector(`.player-0-panel`).classList.remove('winner');
@@ -118,5 +108,5 @@ function resetAll() {
 }
 
 function hideDice() {
-    diceImg.style.display = 'none';
+    document.querySelector('.dice').style.display = 'none';
 }
